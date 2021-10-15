@@ -86,4 +86,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: vcpkg-logs-${{ runner.os }}
-          path: ${{ github.workspace }}/b/ninja/
+          path: ${{ runner.workspace }}/b/ninja/

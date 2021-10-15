@@ -68,7 +68,7 @@ jobs:
           useVcpkgToolchainFile: true
           buildWithCMakeArgs: '-- -v'
           vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
-          buildDirectory: '${{ runner.workspace }}/b/ninja/'
+          buildDirectory: '${{ runner.workspace }}/build/'
       - name: Run CMake+Ninja with triplet (bash)
         if: false
         uses: lukka/run-cmake@main
@@ -82,8 +82,8 @@ jobs:
           vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
           buildDirectory: '${{ runner.workspace }}/b/ninja-bash/'
           useShell: bash
-      - name: Upload GitHub Actions artifact of vcpkg build logs
+      - name: Upload GitHub Actions artifact of vcpkg build
         uses: actions/upload-artifact@v2
         with:
-          name: vcpkg-logs-${{ runner.os }}
-          path: ${{ runner.workspace }}/b/ninja/
+          name: asterism-${{ runner.os }}
+          path: ${{ runner.workspace }}/build/

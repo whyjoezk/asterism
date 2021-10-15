@@ -82,3 +82,9 @@ jobs:
           vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
           buildDirectory: '${{ runner.workspace }}/b/ninja-bash/'
           useShell: bash
+      - name: Upload GitHub Actions artifact of vcpkg build logs
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: vcpkg-logs-${{ runner.os }}
+          path: ${{ github.workspace }}/b/ninja/*

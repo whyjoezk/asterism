@@ -48,16 +48,17 @@ jobs:
         shell: bash
       - name: Prints outputs of run-vcpkg task
         run: echo "'${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}' '${{  steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}' "
-      - name: Run CMake+Ninja without triplet
-        uses: lukka/run-cmake@main
-        id: runcmake
-        with:
-          cmakeGenerator: 'Ninja'  
-          cmakeListsOrSettingsJson: 'CMakeListsTxtBasic'
-          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          useVcpkgToolchainFile: true
-          buildWithCMakeArgs: '-- -v'
-          buildDirectory: '${{ runner.workspace }}/b/ninja/'
+#       - name: Run CMake+Ninja without triplet
+#         uses: lukka/run-cmake@main
+#         id: runcmake
+#         with:
+#           cmakeGenerator: 'Ninja'  
+#           cmakeListsOrSettingsJson: 'CMakeListsTxtBasic'
+#           cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+#           cmakeAppendedArgs: '-D CMAKE_BUILD_TYPE=Release'
+#           useVcpkgToolchainFile: true
+#           buildWithCMakeArgs: '-- -v'
+#           buildDirectory: '${{ runner.workspace }}/b/ninja/'
       - name: Run CMake+Ninja with triplet (cmd)
         uses: lukka/run-cmake@main
         id: runcmake_cmd
@@ -65,23 +66,11 @@ jobs:
           cmakeGenerator: 'Ninja'  
           cmakeListsOrSettingsJson: 'CMakeListsTxtBasic'
           cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=Release'
           useVcpkgToolchainFile: true
           buildWithCMakeArgs: '-- -v'
           vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
           buildDirectory: '${{ runner.workspace }}/build/'
-      - name: Run CMake+Ninja with triplet (bash)
-        if: false
-        uses: lukka/run-cmake@main
-        id: runcmake_bash
-        with:
-          cmakeGenerator: 'Ninja'  
-          cmakeListsOrSettingsJson: 'CMakeListsTxtBasic'
-          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          useVcpkgToolchainFile: true
-          buildWithCMakeArgs: '-- -v'
-          vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
-          buildDirectory: '${{ runner.workspace }}/b/ninja-bash/'
-          useShell: bash
       - name: Upload GitHub Actions artifact of vcpkg build
         uses: actions/upload-artifact@v2
         with:

@@ -21,7 +21,7 @@ jobs:
           -DANDROID_ABI=armeabi-v7a ..
         cmake --build .
     - name: Upload GitHub Actions artifact of vcpkg build
-        uses: actions/upload-artifact@v2
-        with:
-          name: asterism-${{ runner.os }}
-          path: ${{ runner.workspace }}/build/
+      uses: actions/upload-artifact@v2
+      with:
+        name: asterism-android
+        path: ${{ runner.workspace }}/build/

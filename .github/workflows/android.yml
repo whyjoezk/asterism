@@ -5,7 +5,7 @@ jobs:
     name: NDK-R21e
     runs-on: ubuntu-18.04
     steps:
-    - name: Setup Android NDK R23
+    - name: Setup Android NDK R21e
       uses: nttld/setup-ndk@v1
       id: setup-ndk
       with:
@@ -23,7 +23,7 @@ jobs:
           #-DCMAKE_BUILD_TYPE=Release \
           ..
         cmake --build .
-    - name: Upload GitHub Actions artifact of vcpkg build
+    - name: Upload GitHub Actions artifact of cmake-ndk build
       uses: actions/upload-artifact@v2
       with:
         name: asterism-android

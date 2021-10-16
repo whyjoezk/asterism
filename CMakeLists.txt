@@ -59,7 +59,7 @@ if(UNIX)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 endif()
-
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Os")
 add_subdirectory(3rdparty/libuv)
 
 add_subdirectory(3rdparty/http-parser)

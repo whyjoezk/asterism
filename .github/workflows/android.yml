@@ -18,6 +18,7 @@ jobs:
         echo ${{ steps.setup-ndk.outputs.ndk-path }}
         cmake \
           -DCMAKE_TOOLCHAIN_FILE=${{ steps.setup-ndk.outputs.ndk-path }}/build/cmake/android.toolchain.cmake \
+          # -DANDROID_NATIVE_API_LEVEL=21 \
           -DANDROID_ABI=armeabi-v7a -DCMAKE_BUILD_TYPE=Release ..
         cmake --build .
     - name: Upload GitHub Actions artifact of cmake-ndk build

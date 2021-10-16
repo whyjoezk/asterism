@@ -25,3 +25,5 @@ jobs:
       with:
         name: asterism-android
         path: ${{ runner.workspace }}/build/
+    - name: Setup Debug Session
+      uses: csexton/debugger-action@master

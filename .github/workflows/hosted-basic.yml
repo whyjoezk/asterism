@@ -60,9 +60,9 @@ jobs:
           buildWithCMakeArgs: '-- -v'
           vcpkgTriplet: ${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_TRIPLET_OUT }}
           buildDirectory: '${{ runner.workspace }}/build/'
-#       - name: strip symbols(Linux or macOS)
-#         if: runner.os == 'Linux' || runner.os == 'macOS'
-#         run: strip src/asterism/asterism
+      - name: strip symbols(Linux or macOS)
+        if: runner.os == 'Linux' || runner.os == 'macOS'
+        run: strip ${{ runner.workspace }}/build/src/asterism/asterism
           
       - name: Upload GitHub Actions artifact of vcpkg build
         uses: actions/upload-artifact@v2

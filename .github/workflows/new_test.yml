@@ -50,6 +50,12 @@ jobs:
   Linux-Android:
     runs-on: ubuntu-latest
     steps:
+    - name: Setup Android NDK R21e
+      uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: r21e
+        add-to-path: false
     - uses: actions/checkout@v2
       
     - name: build

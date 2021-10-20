@@ -62,7 +62,7 @@ endif()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Os")
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-else
+else()
      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s")
 endif()
 add_subdirectory(3rdparty/libuv)

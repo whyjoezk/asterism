@@ -36,7 +36,7 @@ jobs:
         run: find $RUNNER_WORKSPACE
         shell: bash
       - name: Run CMake+Ninja with triplet (cmd)
-        uses: lukka/run-cmake@main
+        uses: lukka/run-cmake@37910ad41ea9667b241360328d9414b62c7feee1
         id: runcmake_cmd
         with:
           cmakeGenerator: 'Ninja'  

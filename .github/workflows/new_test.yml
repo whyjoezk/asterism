@@ -27,7 +27,7 @@ jobs:
       with:
         name: asterism-linux-x64
         path: ${{ github.workspace }}/build/
-  Linux-mingw(windows):
+  Linux-mingw2windows:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2

@@ -63,7 +63,7 @@ jobs:
       - name: strip symbols(Linux or macOS)
         if: runner.os == 'Linux' || runner.os == 'macOS'
         run: |
-          strip src/asterism
+          strip src/asterism/asterism
       - name: Upload GitHub Actions artifact of vcpkg build
         uses: actions/upload-artifact@v2
         with:

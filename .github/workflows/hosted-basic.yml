@@ -17,11 +17,8 @@ jobs:
             triplet: x64-linux
           - os: macos-latest
             triplet: x64-osx
-
     steps:
-      - uses: actions/checkout@v1
-        with:
-          submodules: true
+      - uses: actions/checkout@v2
       - name: Run CMake with triplet (cmd)
         uses: lukka/run-cmake@main
         with:

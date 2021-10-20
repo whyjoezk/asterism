@@ -10,6 +10,23 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs: 
+  
+  Linux-x64:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: 'build'
+      run: |
+        mkdir build && cd build
+        cmake \
+          -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build .
+    - name: Upload GitHub Actions artifact of Linux-x64
+      uses: actions/upload-artifact@v2
+      with:
+        name: asterism-linux-x64
+        path: ${{ github.workspace }}/build/
   Linux-mingw2windows:
     runs-on: ubuntu-latest
     steps:
@@ -30,4 +47,46 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: asterism-windows-x64
+        path: ${{ github.workspace }}/build/
+        
+  Linux-Android:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup Android NDK R21e
+      uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: r21e
+        add-to-path: false
+    - uses: actions/checkout@v2
+      
+    - name: build
+      run: |
+        mkdir build && cd build
+        echo ${{ steps.setup-ndk.outputs.ndk-path }}
+        cmake \
+          -DCMAKE_TOOLCHAIN_FILE=${{ steps.setup-ndk.outputs.ndk-path }}/build/cmake/android.toolchain.cmake \
+          -DANDROID_NATIVE_API_LEVEL=21 \
+          -DANDROID_ABI=armeabi-v7a -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build .
+    - name: Upload GitHub Actions artifact of cmake-ndk build
+      uses: actions/upload-artifact@v2
+      with:
+        name: asterism-android-x64
+        path: ${{ github.workspace }}/build/
+  
+  MacOS:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build
+      run: |
+        mkdir build && cd build
+        cmake \
+          -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build .
+    - name: Upload GitHub Actions artifact of cmake-ndk build
+      uses: actions/upload-artifact@v2
+      with:
+        name: asterism-MacOS-x64
         path: ${{ github.workspace }}/build/

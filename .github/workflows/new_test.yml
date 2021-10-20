@@ -22,12 +22,12 @@ jobs:
         cmake \
           -DCMAKE_BUILD_TYPE=Release ..
         cmake --build .
-    - name: Upload GitHub Actions artifact of Linux-x64
+    - name: Upload GitHub Actions artifact of Linux-x64 build
       uses: actions/upload-artifact@v2
       with:
         name: asterism-linux-x64
         path: ${{ github.workspace }}/build/
-  Linux-mingw2windows:
+  Linux-2-windows-mingw-w64:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -43,13 +43,13 @@ jobs:
           -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
           -DCMAKE_BUILD_TYPE=Release ..
         cmake --build .
-    - name: Upload GitHub Actions artifact of windows-x64
+    - name: Upload GitHub Actions artifact of cmake-mingw-w64 build
       uses: actions/upload-artifact@v2
       with:
         name: asterism-windows-x64
         path: ${{ github.workspace }}/build/
         
-  Linux-Android:
+  Linux-2-Android:
     runs-on: ubuntu-latest
     steps:
     - name: Setup Android NDK R21e
@@ -85,7 +85,7 @@ jobs:
         cmake \
           -DCMAKE_BUILD_TYPE=Release ..
         cmake --build .
-    - name: Upload GitHub Actions artifact of cmake-ndk build
+    - name: Upload GitHub Actions artifact of cmake-clang build
       uses: actions/upload-artifact@v2
       with:
         name: asterism-MacOS-x64

@@ -1,5 +1,9 @@
 name: new_test
-on: [push]
+on:
+  #schedule:
+  #  - cron: 0 20 */7 * *
+  release:
+    types: [published]
 jobs:
   job:
     name: ${{ matrix.os }}-${{ github.workflow }}

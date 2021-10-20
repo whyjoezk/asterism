@@ -1,44 +1,84 @@
-name: new_test
-on: [push]
-jobs:
-  job:
-    name: ${{ matrix.os }}-${{ github.workflow }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+name: CI
 
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs: 
+  
+  Linux-x64:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - uses: lukka/get-cmake@latest
-      - name: dir
-        run: find $RUNNER_WORKSPACE
-        shell: bash
-
-      - name: Restore artifacts, or setup vcpkg for building artifacts
-        uses: lukka/run-vcpkg@main
-        id: runvcpkg
-        with:
-          # This one is not needed, as it is the default value anyway.
-          # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-          vcpkgJsonGlob: '**/cmakepresets/vcpkg.json'
-
-      - name: List $RUNNER_WORKSPACE before build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
-      - name: Prints output of run-vcpkg's action.
-        run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
-      - name: Run CMake+vcpkg+Ninja
-        uses: lukka/run-cmake@main
-        id: runcmake
-        with:
-          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          configurePreset: 'ninja-multi-vcpkg'
-          buildPreset: 'ninja-multi-vcpkg'
-      - name: List $RUNNER_WORKSPACE after build
-        run: find $RUNNER_WORKSPACE
-        shell: bash
+    - uses: actions/checkout@v2
+      
+    - name: 'build'
+      run: |
+        mkdir build && cd build
+        cmake \
+          -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build .
+    - name: Upload GitHub Actions artifact of Linux-x64
+      uses: actions/upload-artifact@v2
+      with:
+        name: asterism-linux-x64
+        path: ${{ github.workspace }}/build/
+  Linux-mingw(windows):
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: 'build'
+      run: |
+        apt-get install mingw-w64
+        mkdir build && cd build
+        cmake \
+          -DCMAKE_SYSTEM_NAME=Windows \
+          -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
+          -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build .
+    - name: Upload GitHub Actions artifact of windows-x64
+      uses: actions/upload-artifact@v2
+      with:
+        name: asterism-windows-x64
+        path: ${{ github.workspace }}/build/
+        
+  Linux-Android:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: build
+      run: |
+        mkdir build && cd build
+        echo ${{ steps.setup-ndk.outputs.ndk-path }}
+        cmake \
+          -DCMAKE_TOOLCHAIN_FILE=${{ steps.setup-ndk.outputs.ndk-path }}/build/cmake/android.toolchain.cmake \
+          -DANDROID_NATIVE_API_LEVEL=21 \
+          -DANDROID_ABI=armeabi-v7a -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build .
+    - name: Upload GitHub Actions artifact of cmake-ndk build
+      uses: actions/upload-artifact@v2
+      with:
+        name: asterism-android-x64
+        path: ${{ github.workspace }}/build/
+  
+  MacOS:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+        - name: build
+      run: |
+        mkdir build && cd build
+        cmake \
+          -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build .
+    - name: Upload GitHub Actions artifact of cmake-ndk build
+      uses: actions/upload-artifact@v2
+      with:
+        name: asterism-MacOS-x64
+        path: ${{ github.workspace }}/build/

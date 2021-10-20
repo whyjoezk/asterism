@@ -1,9 +1,5 @@
 name: new_test
-on:
-  #schedule:
-  #  - cron: 0 20 */7 * *
-  release:
-    types: [published]
+on: [push]
 jobs:
   job:
     name: ${{ matrix.os }}-${{ github.workflow }}
@@ -40,7 +36,7 @@ jobs:
         uses: lukka/run-cmake@main
         id: runcmake
         with:
-          cmakeListsTxtPath: '${{ github.workspace }}/cmakepresets/CMakeLists.txt'
+          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
           configurePreset: 'ninja-multi-vcpkg'
           buildPreset: 'ninja-multi-vcpkg'
       - name: List $RUNNER_WORKSPACE after build

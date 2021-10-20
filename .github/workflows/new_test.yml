@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name 'install mingw-w64'
+    - name: 'install-mingw-w64'
       run: |
         sudo -E apt-get update
         sudo -E apt-get -y install mingw-w64

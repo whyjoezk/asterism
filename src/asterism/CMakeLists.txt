@@ -26,8 +26,11 @@ if(UNIX)
 endif()
 
 target_link_libraries(asterism ${LINK_LIB})
-if(ANDROID)
+
+#[[if(ANDROID)
     if (CMAKE_CXX_COMPILER_ID MATCHES Clang AND CMAKE_BUILD_TYPE STREQUAL Release)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} ${CMAKE_PROJECT_NAME} COMMENT "Strip debug symbols done on final binary.")
     endif()
-endif()
+endif()]]
+message(${CMAKE_STRIP} ${CMAKE_PROJECT_NAME})
+message(${PROJECT_NAME})

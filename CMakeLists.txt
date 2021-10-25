@@ -76,4 +76,4 @@ add_subdirectory(src/asterism)
     endif()
 endif()]]
 #add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} ${CMAKE_PROJECT_NAME} COMMENT "Strip debug symbols done on final binary.")
-message(WARNING $CMAKE_CXX_COMPILER_ID)
+message(WARNING ${CMAKE_CXX_COMPILER_ID})

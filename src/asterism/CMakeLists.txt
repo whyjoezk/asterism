@@ -32,5 +32,4 @@ target_link_libraries(asterism ${LINK_LIB})
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} ${CMAKE_PROJECT_NAME} COMMENT "Strip debug symbols done on final binary.")
     endif()
 endif()]]
-message(${CMAKE_STRIP} ${CMAKE_PROJECT_NAME})
-message(${PROJECT_NAME})
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} ${CMAKE_PROJECT_NAME} COMMENT "Strip debug symbols done on final binary.")

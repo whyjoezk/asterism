@@ -2,7 +2,10 @@
 # Released under the term specified in file LICENSE.txt
 # SPDX short identifier: MIT
 name: hosted-basic-autocache
-on: [push]
+# on: [push]
+on:
+  release:
+    types: [published]
 
 jobs:
   job:

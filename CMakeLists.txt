@@ -69,3 +69,11 @@ add_subdirectory(3rdparty/libuv)
 
 add_subdirectory(3rdparty/http-parser)
 add_subdirectory(src/asterism)
+
+#[[if(ANDROID)
+    if (CMAKE_CXX_COMPILER_ID MATCHES Clang AND CMAKE_BUILD_TYPE STREQUAL Release)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} ${CMAKE_PROJECT_NAME} COMMENT "Strip debug symbols done on final binary.")
+    endif()
+endif()]]
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} ${CMAKE_PROJECT_NAME} COMMENT "Strip debug symbols done on final binary.")
+message(WARNING CMAKE_CXX_COMPILER_ID)

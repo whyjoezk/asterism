@@ -68,6 +68,7 @@ endif()
 if (CMAKE_SYSTEM_NAME MATCHES "linux")
      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -static")
 endif()
+message(STATUS "result:${CMAKE_SYSTEM_NAME}")
 add_subdirectory(3rdparty/libuv)
 
 add_subdirectory(3rdparty/http-parser)
